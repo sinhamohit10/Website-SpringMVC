@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-7.0.0.1.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.servlet-api-3.0.1.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-webmvc-3.0.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/catalina-7.0.0.1.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-webmvc-3.0.6.RELEASE.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
