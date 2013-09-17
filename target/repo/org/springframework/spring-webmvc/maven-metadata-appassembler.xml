@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-  <groupId>org.apache.tomcat</groupId>
-  <artifactId>tomcat-jasper</artifactId>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-webmvc</artifactId>
   <versioning>
-    <release>7.0.34</release>
+    <release>3.0.6.RELEASE</release>
     <versions>
-      <version>7.0.34</version>
+      <version>3.0.6.RELEASE</version>
     </versions>
     <lastUpdated>20130917093645</lastUpdated>
   </versioning>
