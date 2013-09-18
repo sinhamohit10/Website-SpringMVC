@@ -31,8 +31,13 @@ public class DefaultController extends HttpServlet {
         HttpSession session = request.getSession();
         ServletContext sc = session.getServletContext();
         String x = sc.getRealPath("/");
+        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort(); 
         
-        request.setAttribute("path", x);
+        //ServletOutputStream out = response.getOutputStream();
+        //out.write(host.getBytes());
+        //out.flush();
+        
+        request.setAttribute("path", host);
         request.setAttribute("now", now);
         request.getRequestDispatcher("/WEB-INF/jsp/hello.jsp").forward(request, response);
     }
