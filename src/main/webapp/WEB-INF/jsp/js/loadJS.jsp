@@ -17,6 +17,6 @@
     });
 
 	P.when('jQuery').execute(function(){
-	    P.load.js("<c:url value='/resources/js/bootstrap.min.js'/>");	
+	    P.load.js("${path}/resources/js/bootstrap.min.js");	
 	});
 	</script>
