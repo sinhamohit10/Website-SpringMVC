@@ -3,10 +3,10 @@
   <groupId>org.springframework</groupId>
   <artifactId>spring-web</artifactId>
   <versioning>
-    <release>2.5</release>
+    <release>3.0.6.RELEASE</release>
     <versions>
-      <version>2.5</version>
+      <version>3.0.6.RELEASE</version>
     </versions>
-    <lastUpdated>20130917092344</lastUpdated>
+    <lastUpdated>20130918073817</lastUpdated>
   </versioning>
 </metadata>

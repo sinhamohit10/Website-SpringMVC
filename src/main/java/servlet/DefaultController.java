@@ -17,18 +17,17 @@ import org.springframework.web.servlet.ModelAndView;
 @SuppressWarnings("serial")
 @WebServlet(
         name = "Servlet", 
-        urlPatterns = {"/controller"}
+        urlPatterns = {"/home"}
     )
 public class DefaultController extends HttpServlet {
     protected final Log logger = LogFactory.getLog(getClass());
  
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	ServletOutputStream out = resp.getOutputStream();
-        out.write("heroku".getBytes());
-        out.flush();
-    	handleRequest(req, resp);
+        String now = (new Date()).toString();
+        request.setAttribute("now", now);
+        request.getRequestDispatcher("/WEB-INF/jsp/hello.jsp").forward(request, response);
     }
     
     @Override
