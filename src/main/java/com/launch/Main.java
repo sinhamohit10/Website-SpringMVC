@@ -1,4 +1,4 @@
-package launch;
+package com.launch;
 
 import java.io.File;
 import org.apache.catalina.startup.Tomcat;
