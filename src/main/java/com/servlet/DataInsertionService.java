@@ -5,7 +5,7 @@ public class DataInsertionService {
 
 
 	public static void inserData(DataBean data){
-		if(data.isUseGa()){
+		if("1".equals(data.getUseGa())){
 			GAPusher.pushToGA(data);
 		}else{
 			MongoDAO.insertData(data);

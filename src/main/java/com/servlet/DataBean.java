@@ -3,7 +3,7 @@ package com.servlet;
 public class DataBean {
 
 	private String payload;
-	private boolean useGa = false;
+	private String useGa = "0";
 	
 	public String getPayload() {
 		return payload;
@@ -11,11 +11,12 @@ public class DataBean {
 	public void setPayload(String payload) {
 		this.payload = payload;
 	}
-	public boolean isUseGa() {
+	public String getUseGa() {
 		return useGa;
 	}
-	public void setUseGa(boolean useGa) {
+	public void setUseGa(String useGa) {
 		this.useGa = useGa;
 	}
+	
 	
 }
