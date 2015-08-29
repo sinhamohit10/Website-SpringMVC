@@ -1,13 +1,15 @@
 package com.servlet;
 
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
-import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -38,13 +40,16 @@ public class MongoDAO {
 	private static Document getDBObject(DataBean data){
 		Document doc = null;
 		if( StringUtils.isNotBlank(data.getPayload())){
-			doc = getPayloadDocument(data.getPayload());
+			doc = new Document();
+			doc.put("time", new Date().toString());
+			doc.put("appId", "ABC");
+			doc.put("data", getPayloadDocument(data.getPayload()));
 		}
 		return doc;
 	}
 	
-	private static Document getPayloadDocument(String payload){
-		Document doc = new Document();
+	private static List<Document> getPayloadDocument(String payload){
+		List<Document> docs = new ArrayList<Document>();
 		StringReader reader = new StringReader(payload);
 		JsonReader jsonReader = new JsonReader(reader);
 		jsonReader.setLenient(true);
@@ -53,10 +58,13 @@ public class MongoDAO {
 		Set<Entry<String, JsonElement>> entrySet = jsonObj.entrySet();
 		Iterator<Entry<String, JsonElement>> iter = entrySet.iterator();
 		while(iter.hasNext()){
+			Document nestedDoc = new Document();
 			Entry<String, JsonElement> entry = iter.next();
-			doc.put(entry.getKey(), entry.getValue().toString());
+			nestedDoc.put("metric",entry.getKey());
+			nestedDoc.put("value",new Integer(entry.getValue().getAsInt()));
+			docs.add(nestedDoc);
 		}
-		return doc;
+		return docs;
 	}
 	//public static void main(String[] args) {
 //		 DataBean bean = new DataBean();
