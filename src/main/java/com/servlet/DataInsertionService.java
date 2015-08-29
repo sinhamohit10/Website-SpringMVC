@@ -11,7 +11,14 @@ public class DataInsertionService {
 			MongoDAO.insertData(data);
 		}
 	}
+	
+	public static void insertConfig(String config){
+		MongoDAO.insertConfig(config);
+	}
 
+	public static String findConfig(){
+		return MongoDAO.findConfig();
+	}
 	//	public static void main(String[] args) {
 	//		 ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/app-context.xml");
 	//		 MongoDAO mongoDao = (MongoDAO)context.getBean("mongoDao");

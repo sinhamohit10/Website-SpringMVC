@@ -20,6 +20,7 @@ import com.google.gson.stream.JsonReader;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 public class MongoDAO {
@@ -27,15 +28,41 @@ public class MongoDAO {
 	//private static final String APP_ID = "appId";
 	//private static final String PAYLOAD = "payload";
 
-	private static String COLLECTION_NAME = "AppMetrics";
+	private static String APP_METRICS_COLLECTION_NAME = "AppMetrics";
+	private static String APP_CONFIGS_COLLECTION_NAME = "AppConfigs";
 	
 	//@Autowired
 	//private DBConnectionManager dbConnectionManager;
 	
+	public static void insertConfig(String config){
+		DBConnectionManager dbConnectionManager = new DBConnectionManager();
+		MongoDatabase db = dbConnectionManager.getDatabase();
+		MongoCollection<Document> collection = db.getCollection(APP_CONFIGS_COLLECTION_NAME);
+		Document document = new Document();
+		document.put("appId", "APP1");
+		document.put("config",config);
+		collection.insertOne(document);
+	}
+	
+	public static String findConfig(){
+		String config = null;
+		DBConnectionManager dbConnectionManager = new DBConnectionManager();
+		MongoDatabase db = dbConnectionManager.getDatabase();
+		MongoCollection<Document> collection = db.getCollection(APP_CONFIGS_COLLECTION_NAME);
+		Document document = new Document();
+		document.put("appId", "APP1");
+		MongoCursor<Document> iter= collection.find(document).iterator();
+		if(iter.hasNext()){
+			Document doc = iter.next();
+			config = (String) doc.get("config");
+		}
+		return config;
+	}
+	
 	public static boolean insertData(DataBean data){
 		DBConnectionManager dbConnectionManager = new DBConnectionManager();
 		MongoDatabase db = dbConnectionManager.getDatabase();
-		MongoCollection<Document> collection = db.getCollection(COLLECTION_NAME);
+		MongoCollection<Document> collection = db.getCollection(APP_METRICS_COLLECTION_NAME);
 		Document document = getDBObject(data);
 		collection.insertOne(document);
 		return false;
