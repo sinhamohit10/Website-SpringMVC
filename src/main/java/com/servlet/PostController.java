@@ -1,28 +1,32 @@
 package com.servlet;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+@SuppressWarnings("serial")
+@WebServlet(
+        name = "PostController", 
+        urlPatterns = {"/data"}
+    )
+public class PostController  extends HttpServlet {
 
-@Controller
-@RequestMapping("/data")
-public class PostController {
-
-	@Autowired
-	DataInsertionService dataInsertionService;
-
-
-	@RequestMapping(value="/postData",method = RequestMethod.GET)
-	public void postData(@ModelAttribute("dataBean")DataBean data, 
-			BindingResult bindingResult,
-			HttpServletResponse response, 
-			HttpServletRequest req){
-		dataInsertionService.inserData(data);
-	}
+	@Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String data = request.getParameter("payload");
+        
+        DataBean dataBean = new DataBean();
+        dataBean.setPayload(data);
+        
+        DataInsertionService.inserData(dataBean);
+        
+        ServletOutputStream out = response.getOutputStream();
+        out.write("Done".getBytes());
+        out.flush();
+    }
 }

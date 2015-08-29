@@ -16,7 +16,6 @@ import com.google.gson.stream.JsonReader;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-@Service("mongoDao")
 public class MongoDAO {
 
 	//private static final String APP_ID = "appId";
@@ -27,7 +26,7 @@ public class MongoDAO {
 	//@Autowired
 	//private DBConnectionManager dbConnectionManager;
 	
-	public boolean insertData(DataBean data){
+	public static boolean insertData(DataBean data){
 		DBConnectionManager dbConnectionManager = new DBConnectionManager();
 		MongoDatabase db = dbConnectionManager.getDatabase();
 		MongoCollection<Document> collection = db.getCollection(COLLECTION_NAME);
@@ -36,7 +35,7 @@ public class MongoDAO {
 		return false;
 	}
 	
-	private Document getDBObject(DataBean data){
+	private static Document getDBObject(DataBean data){
 		Document doc = null;
 		if( StringUtils.isNotBlank(data.getPayload())){
 			doc = getPayloadDocument(data.getPayload());
@@ -44,7 +43,7 @@ public class MongoDAO {
 		return doc;
 	}
 	
-	private Document getPayloadDocument(String payload){
+	private static Document getPayloadDocument(String payload){
 		Document doc = new Document();
 		StringReader reader = new StringReader(payload);
 		JsonReader jsonReader = new JsonReader(reader);

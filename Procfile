@@ -1,1 +1,1 @@
-web: sh target/bin/webapp
+web: sh target/bin/webapp --port 5000
