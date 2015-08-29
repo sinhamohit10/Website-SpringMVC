@@ -14,7 +14,7 @@ import com.mongodb.client.MongoDatabase;
 @Repository("dbConnectionManager")
 public class DBConnectionManager {
 
-	private static String DB_URL = "128.199.248.136";
+	private static String DB_URL = "128.199.218.214";
 	private static int DB_PORT = 27017;
 	private static String DB_NAME = "seq";
 	private static String DB_USERNAME = "test";

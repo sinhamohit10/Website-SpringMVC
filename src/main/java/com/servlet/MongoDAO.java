@@ -56,9 +56,7 @@ public class MongoDAO {
 		while(iter.hasNext()){
 			Entry<String, JsonElement> entry = iter.next();
 			doc.put(entry.getKey(), entry.getValue().toString());
-			System.out.println(entry.getKey()+" "+entry.getValue().toString());
 		}
-		System.out.println(doc.toString());
 		return doc;
 	}
 	//public static void main(String[] args) {
