@@ -10,11 +10,15 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
+import org.jongo.Command;
+import org.jongo.Jongo;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
@@ -66,12 +70,41 @@ public class MongoDAO {
 		}
 		return docs;
 	}
+	
+	
+	public static String getSummary(){
+		String cmd = "\"aggregate\", {"+
+        "pipeline: ["+
+        "{ $unwind: \"$data\" },"+
+        "{"+
+            "$group: {"+
+                "_id: { _id: \"$_id\", metric: \"$data.metric\" },"+
+            "}"+
+        "},"+
+        "{"+
+            "$group: {"+
+                "_id: { metric:\"$_id.metric\" },"+
+                "sum: { $sum: 1 },"+
+            "}"+
+        "}"+
+    "]"+
+"}";
+		DBConnectionManager dbConnectionManager = new DBConnectionManager();
+		MongoClient client = dbConnectionManager.getMongoClient();
+		DB db = client.getDB("seq");
+
+		Jongo jongo = new Jongo(db);
+		Command a = jongo.runCommand(cmd);
+		System.out.println(a.toString());
+		return null;
+	}
 	//public static void main(String[] args) {
 //		 DataBean bean = new DataBean();
 //		 bean.setPayload("{foo: bar, foo2: baz}");
 //		MongoDAO dao = new MongoDAO();
 //		dao.insertData(bean);
-//	}
+	//	getSummary();
+	//}
 }
 
 
