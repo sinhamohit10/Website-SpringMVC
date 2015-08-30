@@ -43,10 +43,8 @@ public class GAPusher {
 			urlParameters.add(new BasicNameValuePair("t", "event"));
 			urlParameters.add(new BasicNameValuePair("tid", "UA-32752844-1"));
 			urlParameters.add(new BasicNameValuePair("cid", "555"));
-			urlParameters.add(new BasicNameValuePair("ec", "APP1"));
-			urlParameters.add(new BasicNameValuePair("ec", "APP1"));
-			urlParameters.add(new BasicNameValuePair("ea", "click"));
-			urlParameters.add(new BasicNameValuePair("ec", "APP1"));
+			urlParameters.add(new BasicNameValuePair("ec", data.getScreenName())); //screenname
+			urlParameters.add(new BasicNameValuePair("ea", data.getAction())); //activityName:interactionType
 			urlParameters.add(new BasicNameValuePair("el", entry.getKey()));
 			urlParameters.add(new BasicNameValuePair("ev", entry.getValue().toString()));
 			try{

@@ -19,8 +19,12 @@ public class PostController  extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String data = request.getParameter("payload");
+        String screenName = request.getParameter("screenname");
+        String action = request.getParameter("action");
         DataBean dataBean = new DataBean();
         dataBean.setPayload(data);
+        dataBean.setScreenName(screenName);
+        dataBean.setAction(action);
         
         DataInsertionService.inserData(dataBean);
         
