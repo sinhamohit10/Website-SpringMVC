@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +18,11 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -88,5 +94,27 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
     	doGet(req, resp);
+    }
+    
+    public static void main(String[] args) {
+    	String url = "http://128.199.218.214:32770/upload";
+    	File file = new File("build.properties");
+    	try {
+    		String boundary = "---------------------------7da24f2e50046";
+    	    HttpClient httpclient = new DefaultHttpClient();
+
+    	    HttpPost httppost = new HttpPost(url);
+
+    	    InputStreamEntity reqEntity = new InputStreamEntity(
+    	            new FileInputStream(file), -1);
+    	    reqEntity.setContentType("application/octet-stream");
+    	    //reqEntity.setChunked(true); // Send in multiple parts if needed
+    	    httppost.setEntity(reqEntity);
+    	    HttpResponse response = httpclient.execute(httppost);
+    	    //Do something with response...
+
+    	} catch (Exception e) {
+    	    // show error
+    	}
     }
 }

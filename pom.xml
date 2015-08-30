@@ -120,6 +120,13 @@
 	        <version>1.9.9</version>
 	    </dependency>  
 	    <!-- AWS Dependency -->
+	    <!-- Gson Library -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<!-- Gson Library End-->
 	</dependencies>
 	<build>
 		<finalName>embeddedTomcatSample</finalName>
