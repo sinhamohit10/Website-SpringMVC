@@ -14,8 +14,8 @@ import com.mongodb.client.MongoDatabase;
 @Repository("dbConnectionManager")
 public class DBConnectionManager {
 
-	private static String DB_URL = "128.199.218.214";
-	private static int DB_PORT = 27017;
+	private static String DB_URL = "ds035503.mongolab.com";
+	private static int DB_PORT = 35503;
 	private static String DB_NAME = "seq";
 	private static String DB_USERNAME = "test";
 	private static String DB_PASSWORD = "test@123";

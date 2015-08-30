@@ -11,22 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
 @WebServlet(
-        name = "PostController", 
-        urlPatterns = {"/data"}
+        name = "ConfigGetController", 
+        urlPatterns = {"/configget"}
     )
-public class PostController  extends HttpServlet {
+public class ConfigGetController extends HttpServlet {
 
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String data = request.getParameter("payload");
-        String useGa = request.getParameter("useGa");
-        DataBean dataBean = new DataBean();
-        dataBean.setPayload(data);
-        
-        DataInsertionService.inserData(dataBean);
+        String config = DataInsertionService.findConfig();
         
         ServletOutputStream out = response.getOutputStream();
-        out.write("Done".getBytes());
+        out.write(config.getBytes());
         out.flush();
     }
 }
