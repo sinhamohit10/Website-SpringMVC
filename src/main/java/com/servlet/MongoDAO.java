@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -155,9 +156,10 @@ public class MongoDAO {
 		doc.put("value", 1);
 		doc.put("_id", 0);
 		Map<String,Integer> summary = new HashMap<String,Integer>();
-		MongoCursor<Document> cur = collection.find().iterator();
+		FindIterable<Document> fi=collection.find();
+		MongoCursor<Document> cur = fi.iterator();
 		while(cur.hasNext()){
-			Document[]lDoc = (Document[])cur.next().get("data");
+			ArrayList<Document> lDoc = (ArrayList<Document>)cur.next().get("data");
 			
 			for(Document dd:lDoc){
 				String key = (String) dd.get("metric");
@@ -172,13 +174,18 @@ public class MongoDAO {
 		}
 		return summary;
 	}
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 //		 DataBean bean = new DataBean();
 //		 bean.setPayload("{foo: bar, foo2: baz}");
 //		MongoDAO dao = new MongoDAO();
 //	dao.insertData(bean);
-		getSummary();
-	}
+	//	Map<String,Integer> tt = readData();
+	//	Iterator<String> iter = tt.keySet().iterator();
+	//	while(iter.hasNext()){
+	//		String key = iter.next();
+	//		System.out.println(key + " "+ tt.get(key));
+	//	}
+	//}
 }
 
 
