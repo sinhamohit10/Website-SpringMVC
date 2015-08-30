@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -44,16 +45,12 @@ public class DefaultController extends HttpServlet {
         
         List<String> keys = new ArrayList<String>();
 		List<Integer> values = new ArrayList<Integer>();
+		Map<String, Integer> data = DataInsertionService.getData();
 		
-		keys.add("Profile");
-		keys.add("Pictures");
-		keys.add("Likes");
-		keys.add("Comments");
-		
-		values.add(10);
-		values.add(20);
-		values.add(200);
-		values.add(300);
+		for (Map.Entry<String, Integer> entry : data.entrySet()) {
+			keys.add(entry.getKey());
+			values.add(entry.getValue());
+		}
 		
         request.setAttribute("keys", gson.toJson(keys));
         request.setAttribute("values", gson.toJson(values));
