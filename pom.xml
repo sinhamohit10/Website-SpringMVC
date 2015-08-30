@@ -150,9 +150,6 @@
 			<artifactId>elasticsearch</artifactId>
 			<version>1.7.1</version>
 		</dependency>
-
-
->>>>>>> 0aa03d6ad8aff47f917e1f0441bee528630790f6
 	</dependencies>
 	<build>
 		<finalName>embeddedTomcatSample</finalName>
