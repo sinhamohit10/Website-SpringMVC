@@ -1,15 +1,13 @@
 package com.servlet;
 
+import java.util.Map;
 
 public class DataInsertionService {
 
 
 	public static void inserData(DataBean data){
-		if("1".equals(data.getUseGa())){
 			GAPusher.pushToGA(data);
-		}else{
 			MongoDAO.insertData(data);
-		}
 	}
 	
 	public static void insertConfig(String config){
@@ -18,6 +16,10 @@ public class DataInsertionService {
 
 	public static String findConfig(){
 		return MongoDAO.findConfig();
+	}
+	
+	public static Map<String, Integer> getData(){
+		return MongoDAO.readData();
 	}
 	//	public static void main(String[] args) {
 	//		 ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/app-context.xml");

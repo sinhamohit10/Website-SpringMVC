@@ -3,22 +3,20 @@ package com.servlet;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
-import org.jongo.Command;
-import org.jongo.Jongo;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -116,22 +114,71 @@ public class MongoDAO {
         "}"+
     "]"+
 "}";
-		DBConnectionManager dbConnectionManager = new DBConnectionManager();
-		MongoClient client = dbConnectionManager.getMongoClient();
-		DB db = client.getDB("seq");
 
-		Jongo jongo = new Jongo(db);
-		Command a = jongo.runCommand(cmd);
-		System.out.println(a.toString());
+		Document doc  = new Document();
+		Document aggDoc = new Document();
+		List<Document> pipeArr = new ArrayList<Document>();
+		pipeArr.add(new Document("$unwind","$data"));
+		pipeArr.add(new Document("$group",new Document("_id",new Document("_id","$_id, metric: $data.metric"))));
+		Document grDoc = new Document();
+		grDoc.put("_id", new Document("metric","$_id.metric"));
+		grDoc.put("sum", new Document("$sum",1));
+		
+		doc.put("aggregate",aggDoc);
+		aggDoc.put("pipeline", pipeArr);
+		
+		pipeArr.add(new Document("$group",grDoc));
+		
+		System.out.println(new Document("tt",pipeArr).toJson().toString());
+		
+		DBConnectionManager dbConnectionManager = new DBConnectionManager();
+		MongoDatabase db = dbConnectionManager.getDatabase();
+		MongoCollection<Document> collection = db.getCollection(APP_METRICS_COLLECTION_NAME);
+		MongoCursor<Document> d = collection.aggregate(pipeArr).iterator();
+		while(d.hasNext()){
+			System.out.println(d.next().toJson());
+			
+		}
+		
+		//Document d = db.runCommand(doc);
 		return null;
 	}
-	//public static void main(String[] args) {
+	
+	
+	public static Map<String,Integer> readData(){
+		DBConnectionManager dbConnectionManager = new DBConnectionManager();
+		MongoDatabase db = dbConnectionManager.getDatabase();
+		MongoCollection<Document> collection = db.getCollection(APP_METRICS_COLLECTION_NAME);
+		
+		Document doc = new Document();
+		doc.put("metric", 1);
+		doc.put("value", 1);
+		doc.put("_id", 0);
+		Map<String,Integer> summary = new HashMap<String,Integer>();
+		MongoCursor<Document> cur = collection.find().iterator();
+		while(cur.hasNext()){
+			Document[]lDoc = (Document[])cur.next().get("data");
+			
+			for(Document dd:lDoc){
+				String key = (String) dd.get("metric");
+				Integer val = (Integer) dd.get("value");
+				
+				if(summary.containsKey(key)){
+					val += summary.get(key);
+				}
+				summary.put(key, val);
+			}
+			
+		}
+		return summary;
+	}
+	public static void main(String[] args) {
 //		 DataBean bean = new DataBean();
 //		 bean.setPayload("{foo: bar, foo2: baz}");
 //		MongoDAO dao = new MongoDAO();
-//		dao.insertData(bean);
-	//	getSummary();
-	//}
+//	dao.insertData(bean);
+		getSummary();
+	}
 }
 
 

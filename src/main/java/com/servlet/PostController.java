@@ -22,7 +22,6 @@ public class PostController  extends HttpServlet {
         String useGa = request.getParameter("useGa");
         DataBean dataBean = new DataBean();
         dataBean.setPayload(data);
-        dataBean.setUseGa(useGa);
         
         DataInsertionService.inserData(dataBean);
         
