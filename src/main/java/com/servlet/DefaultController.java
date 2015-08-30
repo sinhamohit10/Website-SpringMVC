@@ -1,7 +1,9 @@
 package com.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,6 +18,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 @SuppressWarnings("serial")
 @WebServlet(
         name = "Servlet", 
@@ -23,7 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
     )
 public class DefaultController extends HttpServlet {
     protected final Log logger = LogFactory.getLog(getClass());
- 
+    private Gson gson = new Gson();
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,9 +42,22 @@ public class DefaultController extends HttpServlet {
         //out.write(host.getBytes());
         //out.flush();
         
-        request.setAttribute("path", host);
-        request.setAttribute("now", now);
-        request.getRequestDispatcher("/WEB-INF/jsp/hello.jsp").forward(request, response);
+        List<String> keys = new ArrayList<String>();
+		List<Integer> values = new ArrayList<Integer>();
+		
+		keys.add("Profile");
+		keys.add("Pictures");
+		keys.add("Likes");
+		keys.add("Comments");
+		
+		values.add(10);
+		values.add(20);
+		values.add(200);
+		values.add(300);
+		
+        request.setAttribute("keys", gson.toJson(keys));
+        request.setAttribute("values", gson.toJson(values));
+        request.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(request, response);
     }
     
     @Override
